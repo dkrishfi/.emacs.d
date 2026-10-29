@@ -1,0 +1,308 @@
+;; -*- lexical-binding: nil; -*- 
+
+;; for rust
+(use-package lsp-mode
+  :ensure t
+  :commands lsp)
+
+
+
+
+;; Example: connect to a clangd already running on localhost:9999
+;; (lsp-register-client
+;;  (make-lsp-client
+;;   :new-connection (lsp-tcp-connection "localhost" 9999)
+;;   :major-modes '(c-mode c++-mode)
+;;   :server-id 'clangd-container))
+
+
+
+
+
+
+
+;; (use-package lsp-mode
+;;   :ensure t
+;;   ;; :after yasnippet
+;;   :hook ((c-mode c++-mode) . lsp-deferred)
+;;   :commands (lsp)
+;;   :bind (:map lsp-mode-map
+;;               ("S-<f3>" . lsp-signature-activate)
+;;               ("C-<f3>" . lsp-signature-next)
+;;               ("M-<f3>" . lsp-signature-previous)
+;;               ("s-<f3>" . lsp-signature-stop)
+;;               ("S-<f5>" . ccc-toggle-header-source)
+;;               ("C-<f5>" . lsp-describe-thing-at-point)
+;;               ;; ("M-<f5>" . lsp-goto-implementation)
+;;               ;; ("s-<f5>" . lsp-goto-type-definition)
+;;               ("S-<f6>" . lsp-lens-mode)
+;;               ("C-<f6>" . lsp-lens-show)
+;;               ("M-<f6>" . lsp-lens-hide)
+;;               ("s-<f6>" . lsp-symbol-highlight)
+;;               ("S-<f10>" . lsp-format-buffer)
+;;               ("C-<f10>" . lsp-format-region)
+;;               ("M-<f10>" . lsp-organize-imports)
+;;               ("s-<f10>" . lsp-signature-toggle-full-docs)
+;;               ("S-<f11>" . lsp-describe-session)
+;;               ("C-<f11>" . lsp-workspace-folders-add)
+;;               ("M-<f11>" . lsp-workspace-folders-remove)
+;;               ("s-<f11>" . lsp-workspace-restart)
+;;               ("S-<f12>" . lsp-find-definition)
+;;               ("C-<f12>" . lsp-find-definition-other)
+;;               ("M-<f12>" . lsp-find-references)
+;;               ("s-<f12>" . lsp-find-references-other)
+;;               )
+;;   :init
+;;   (setq-default lsp-clients-clangd-executable "clang-d")
+;; ;;                (seq-find #'executable-find exordium-lsp-clangd-executable))
+
+;;   :custom
+;;   (add-to-list 'exec-path "~/.cargo/bin")
+;;   ;; (lsp-eldoc-enable-hover t) ;; default
+;;   (lsp-eldoc-enable-hover nil) ;; qqq manually lookup help
+
+;;   ;; (lsp-eldoc-hook '(lsp-hover)) ;; default
+
+;;   ;; (lsp-eldoc-render-all nil) ;; default just show symbol info
+;;   (lsp-eldoc-render-all t) ;; document/onHover
+
+;;   ;; (lsp-enable-completion-at-point t) ;; default uses old completion-at-point
+;; ;;      ;; use `company-ctags' only.
+;; ;;      ;; Please note `company-lsp' is automatically enabled if installed
+;;   (lsp-enable-completion-at-point nil) ;; qqq use company ???
+
+;;   ;; (lsp-enable-file-watchers t) ;; default
+;;   ;; (lsp-enable-folding t)
+;;   ;; (lsp-enable-imenu t) ;; default
+
+;;   ;; (lsp-enable-indentation t) ;; default
+;;   (lsp-enable-indentation nil)
+
+;;   ;; (lsp-enable-links t) ;; default
+;; ;;      ;; use ffip instead
+;; ;;      (setq lsp-enable-links nil)
+
+;;   ;; (lsp-enable-on-type-formatting t) ;; default
+;;   (lsp-enable-on-type-formatting nil)
+
+;;   ;; (lsp-enable-semantic-highlighting nil) ;; default
+;;   ;; (lsp-enable-semantic-highlighting t)
+
+;;   ;; (lsp-enable-snippet t) ;; default
+;;   (lsp-enable-snippet nil)
+
+;;   ;; (lsp-enable-symbol-highlighting t) ;; default
+;;   (lsp-enable-symbol-highlighting nil)
+
+;;   ;; (lsp-enable-text-document-color t) ;; default
+;;   (lsp-enable-text-document-color nil)
+
+;;   ;; (lsp-enable-xref t) ;; default
+
+;;   ;; ;;(lsp-file-watch-ignored )
+;;   ;; (lsp-file-watch-threshold 1000)
+;;   ;; (lsp-folding-line-folding-only nil)
+;;   ;; (lsp-folding-range-limit nil)
+;;   (lsp-idle-delay 2.000)
+;;   ;; (lsp-imenu-container-name-separator "/")
+;;   ;; (lsp-imenu-show-container-name t) ;; default
+;;   ;; (lsp-imenu-sort-methods '(kind name))
+;;   ;; (lsp-io-messages-max t)
+;;   ;; (lsp-keep-workspace-alive t) ;; default
+;;   (lsp-keep-workspace-alive nil)
+
+;;   ;; (lsp-lens-auto-enable nil) ;; default qqq no clangd support yet
+;;   ;; (lsp-lens-auto-enable t)
+
+;;   ;; (lsp-lens-check-interval 0.1)
+;;   ;; (lsp-lens-debounce-interval 0.2)
+;;   ;; (lsp-links-check-internal 0.1)
+;;   ;;(lsp-log-io nil) ;; default
+;;   ;;(lsp-log-io t)
+;;   ;; (lsp-log-max message-log-max)
+;;   ;; (lsp-on-change-hook nil)
+;;   ;; (lsp-on-idle-hook nil)
+;;   ;; (lsp-overlay-document-color-char "■")
+;;   ;; (lsp-prefer-capf nil) ;; default
+
+;;   ;; (lsp-prefer-flymake t) ;; default
+;;   (lsp-prefer-flymake nil)
+
+;;   ;; (lsp-print-performance nil)
+;;   ;; (lsp-report-if-no-buffer t)
+;;   ;; (lsp-response-timeout 20)
+
+;;   ;; (lsp-restart 'interactive) ;; default
+;;      (lsp-restart 'auto-restart)
+
+;;   ;; (lsp-server-install-dir (expand-file-name)
+;;   ;; (lsp-server-trace nil)
+;;   ;; (lsp-session-file (expand-file-name (locate-user-emacs-file ".lsp-session-v1")))
+
+;;   (lsp-signature-auto-activate t) ;; default qqq signatureHelpProvider not sure
+;;   ;; (lsp-signature-auto-activate nil)
+
+;;   ;; (lsp-signature-doc-lines 30) ;; default
+
+;;   ;; (lsp-signature-render-documentation t) ;; qqq display sig doc in eldoc
+;;   (lsp-signature-render-documentation nil) ;; qqq use something else ???
+
+;;   (lsp-symbol-highlighting-skip-current t)
+;;   ;; (lsp-tcp-connection-timeout 2)
+;;   ;; (lsp-workspace-folders-changed-functions nil)
+
+;;   ;; (lsp-after-diagnostics-hook nil)
+;;   ;; (lsp-after-initialize-hook nil)
+;;   ;; (lsp-after-open-hook nil)
+;;   ;; (lsp-after-uninitialized-functions nil)
+;;   ;; (lsp-auto-configure t) ;; default
+
+;;   ;; (lsp-auto-execute-action t) ;; default
+;;   ;; (lsp-auto-guess-root nil) ;; default
+;;   ;; (lsp-auto-require-clients t)  ;;default
+;;   ;; (lsp-before-apply-edits-hook nil)
+;;   ;; (lsp-before-initialize-hook nil)
+;;   ;; (lsp-before-open-hook nil)
+;;   ;; (lsp-before-save-edits t)
+;;   ;; (lsp-debounce-full-sync-notifications t)
+;;   ;; (lsp-debounce-full-sync-notifications-interval 1.0)
+;;   ;; (lsp-diagnostics-updated-hook nil)
+;;   ;; (lsp-disabled-clients nil)
+;;   ;; (lsp-document-sync-method nil)
+
+;;   (lsp-rust-analyzer-cargo-watch-command "clippy")
+;;   (lsp-eldoc-render-all t)
+;;   (lsp-idle-delay 0.6)
+;;   (lsp-rust-analyzer-server-display-inlay-hints t)
+
+
+;; ;;  (lsp-clients-clangd-args '("-j=4"
+;; ;;                                      "--background-index"
+;; ;;                                      "--log=error"
+;; ;;                                      "--clang-tidy"))
+
+;;   (lsp-clients-clangd-args '("-j=4"
+;;                                       "--background-index"
+;;                                       "--log=error"))
+
+;;   (lsp-diagnostic-provider :flycheck)
+;;   (lsp-flycheck-live-reporting t)
+;;   ;; company mode configuration for lsp-mode
+;;   (lsp-completion-provider :capf)
+;;   ;; semantic hilite via lsp server
+;;   (lsp-semantic-tokens-enable t)
+
+;;   (lsp-idle-delay 0.1) ;; clangd is fast
+;;   (lsp-log-io t)
+
+;; :config
+;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+;; )
+
+;; (use-package lsp-mode
+;;   :hook ((c-mode c++-mode c-ts-mode c++-ts-mode) . lsp-deferred)
+;;   :commands (lsp lsp-deferred)
+;;   :config
+;;   (lsp-register-client
+;;    (make-lsp-client
+;;     :new-connection
+;;     (lsp-tramp-connection "~/bin/clangd-podman")
+;;     :major-modes '(c-mode c++-mode c-ts-mode c++-ts-mode)
+;;     :remote? t
+;;     :server-id 'clangd-podman)))
+
+;; (setq lsp-clients-clangd-args
+;;       '("--background-index"
+;;         "--clang-tidy"
+;;         "--header-insertion=never"
+;;         "--compile-commands-dir=build"))
+;; (setq lsp-enable-file-watchers nil)
+;; (setq lsp-keep-workspace-alive nil)
+;; (setq lsp-idle-delay 0.5)
+;; (setq read-process-output-max (* 1024 1024))
+;; (setq lsp-log-io t)
+
+;; ;; port forward in Dockerfile
+;; socat TCP-LISTEN:5007,reuseaddr,fork \
+;;       EXEC:"clangd --background-index --compile-commands-dir=/workspace/build"
+
+;; ssh -L 5007:localhost:5007 user@remote
+
+;; (setq lsp-clients-clangd-executable nil)
+
+;; (lsp-register-client
+;;  (make-lsp-client
+;;   :new-connection (lsp-tcp-connection (lambda () "localhost") 5007)
+;;   :major-modes '(c-mode c++-mode)
+;;   :server-id 'clangd-remote))
+
+;; .devcontainer/postCreate.sh
+;; #!/usr/bin/env bash
+
+;; PORT=5007
+
+;; echo "[clangd] starting TCP server on $PORT"
+
+;; nohup socat TCP-LISTEN:${PORT},reuseaddr,fork \
+;;   EXEC:"clangd \
+;;     --background-index \
+;;     --compile-commands-dir=/workspace/build \
+;;     --log=error" \
+;;   >/tmp/clangd.log 2>&1 &
+
+;; clangd-lsp-proxy
+
+
+
+;; (add-to-list 'tramp-connection-properties
+;;              (list (regexp-quote "/ssh:user@host:")
+;;                    "remote-shell" "/bin/bash"))
+
+
+
+;; (use-package lsp-mode
+;;   :hook ((c-mode c++-mode . lsp-deferred))
+;;   :config
+;;   (lsp-register-client
+;;    (make-lsp-client
+;;     :new-connection
+;;     (lsp-tramp-connection
+;;      '("podman" "exec" "-i" "my-container" "clangd"))
+;;     :major-modes '(c-mode c++-mode)
+;;     :remote? t
+;;     :server-id 'clangd-podman)))
+
+;; (use-package lsp-mode
+;;   :hook ((c-mode c++-mode c-ts-mode c++-ts-mode) . lsp-deferred)
+;;   :commands (lsp lsp-deferred)
+;;   :config
+;;   (lsp-register-client
+;;    (make-lsp-client
+;;     :new-connection
+;;     (lsp-tramp-connection "~/bin/clangd-podman")
+;;     :major-modes '(c-mode c++-mode c-ts-mode c++-ts-mode)
+;;     :remote? t
+;;     :server-id 'clangd-podman)))
+
+
+;; (lsp-register-client
+;;  (make-lsp-client
+;;   :new-connection (lsp-tramp-connection "~/bin/clangd-persistent")
+;;   :major-modes '(c-mode c++-mode)
+;;   :remote? t
+;;   :server-id 'clangd-podman))
+
+;; ;; reduce filesystem chatter
+;; (setq remote-file-name-inhibit-locks t)
+;; (setq vc-ignore-dir-regexp
+;;       (format "\\(%s\\)\\|\\(%s\\)"
+;;               vc-ignore-dir-regexp tramp-file-name-regexp))
+
+
+;; hook
+;; config
+;; new-connection
+;; major-modes
+;; remote?
+;; server-id
+;; commands
